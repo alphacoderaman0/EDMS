@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block main %}
+{% load static %}
+
+<div class="page-wrapper">
+
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="row">
+                <div class="col-12 col-lg-12 d-flex">
+                    <div class="card radius-15 w-100">
+                        <div class="card-header border-bottom-0 radius-15">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <img src="{% static 'assets/images/login-images/dashboard.jpg' %}"
+                                        style="width: 1000px; height: 500px; border-radius: 15px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
