@@ -14,7 +14,7 @@ SECRET_KEY = 'id6=b(ven$mqn)8u47o+pu=c5d))v634zt3+b6^n$fwc0^^7@#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh','localhost']
 
 
 # Application definition
@@ -63,10 +63,20 @@ WSGI_APPLICATION = 'eDiary_ManagementSystem.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'e63G*cegB34-gfgb4A*64--fdegcD2c2',
+        'HOST': 'roundhouse.proxy.rlwy.net',
+        'PORT': '12902',
     }
 }
 
