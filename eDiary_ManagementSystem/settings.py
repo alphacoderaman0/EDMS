@@ -1,5 +1,9 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,7 +18,7 @@ SECRET_KEY = 'id6=b(ven$mqn)8u47o+pu=c5d))v634zt3+b6^n$fwc0^^7@#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh','localhost']
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh','localhost' , 'http://127.0.0.1/']
 
 
 # Application definition
@@ -69,16 +73,30 @@ WSGI_APPLICATION = 'eDiary_ManagementSystem.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'e63G*cegB34-gfgb4A*64--fdegcD2c2',
-        'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '12902',
+        'ENGINE': 'djongo',
+        'NAME': 'ediary',  # Change this to your actual MongoDB database name
+        'ENFORCE_SCHEMA': False,  # Keep it False to allow flexible schemas
+        'CLIENT': {
+            'host':os.getenv('DATABASE_URL'),
+            'tls': True
+        }
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'e63G*cegB34-gfgb4A*64--fdegcD2c2',
+#         'HOST': 'roundhouse.proxy.rlwy.net',
+#         'PORT': '12902',
+#     }
+# }
 
 
 # Password validation

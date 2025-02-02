@@ -3,26 +3,58 @@
 {% load static %}
 
 <div class="page-wrapper">
-
     <div class="page-content-wrapper">
         <div class="page-content">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-12 col-lg-12 d-flex">
                     <div class="card radius-15 w-100">
                         <div class="card-header border-bottom-0 radius-15">
-                            <div class="d-flex align-items-center">
-                                <div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <div class="image-container">
                                     <img src="{% static 'assets/images/login-images/dashboard.jpg' %}"
-                                        style="width: 1000px; height: 500px; border-radius: 15px;">
+                                        class="responsive-img">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
+
+<style>
+    /* Ensuring the image is fully responsive */
+    .image-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .responsive-img {
+        width: 100%;
+        max-width: 1000px; /* Max width to maintain original size */
+        height: auto;
+        border-radius: 15px;
+    }
+
+    @media (max-width: 1200px) {
+        .responsive-img {
+            max-width: 1200px; /* Adjusting for medium screens */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .responsive-img {
+            max-width: 600px; /* Adjusting for tablets */
+        }
+    }
+
+    @media (max-width: 576px) {
+        .responsive-img {
+            max-width: 100%; /* Full width for smaller screens */
+        }
+    }
+</style>
+
 {% endblock %}
