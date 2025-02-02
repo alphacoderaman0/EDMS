@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install dependencies using the system's default python (from Vercel environment)
+# Install dependencies
 pip install --upgrade pip
 pip install -r requirements.txt
 
