@@ -2,17 +2,15 @@
     "version": 2,
     "builds": [
       {
-        "src": "build_files.sh",
-        "use": "@vercel/static-build",
-        "config": { "distDir": "staticfiles" }
-      },
-      {
         "src": "manage.py",
         "use": "@vercel/python"
       }
     ],
     "routes": [
-      { "src": "/(.*)", "dest": "manage.py" }
+      {
+        "src": "/(.*)",
+        "dest": "manage.py"
+      }
     ]
   }
   

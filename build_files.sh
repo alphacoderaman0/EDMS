@@ -1,12 +1,11 @@
 #!/bin/bash
 
-# Ensure pip is available
-python -m ensurepip --default-pip
-
-# Install dependencies
-python -m pip install --upgrade pip
+# Install dependencies using the system's default python (from Vercel environment)
+pip install --upgrade pip
 pip install -r requirements.txt
 
-# Run Django collectstatic & migrations
+# Collect static files
 python manage.py collectstatic --noinput
+
+# Apply migrations
 python manage.py migrate
