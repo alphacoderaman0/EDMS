@@ -1,60 +1,127 @@
 {% extends 'base.html' %}
-{% block main %}
 {% load static %}
+{% block body_class %}nf-landing-page{% endblock %}
+{% block main %}
+<div class="nf-landing">
+    <div class="nf-orb nf-orb-1"></div>
+    <div class="nf-orb nf-orb-2"></div>
+    <div class="nf-orb nf-orb-3"></div>
 
-<div class="page-wrapper">
-    <div class="page-content-wrapper">
-        <div class="page-content">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-12 d-flex">
-                    <div class="card radius-15 w-100">
-                        <div class="card-header border-bottom-0 radius-15">
-                            <div class="d-flex align-items-center justify-content-center">
-                                <div class="image-container">
-                                    <img src="{% static 'assets/images/login-images/dashboard.jpg' %}"
-                                        class="responsive-img">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <nav class="nf-landing-nav">
+        <a href="{% url 'index' %}" class="nf-brand">eDiary</a>
+        <div class="nf-landing-nav-actions">
+            <a href="{% url 'registration' %}" class="btn btn-secondary"><i class="bx bx-user-plus"></i> Register</a>
+            <a href="{% url 'user_login' %}" class="btn btn-nf-signin">Sign In</a>
+        </div>
+    </nav>
+
+    <section class="nf-hero">
+        <div class="nf-hero-inner">
+            <div class="nf-pill"><i class="bx bxs-magic-wand"></i> Neon-dark productivity space</div>
+            <h1>Write boldly.<br>Organize instantly.</h1>
+            <p class="nf-hero-lead">
+                Categories, notes, search & history — wrapped in a cinematic glow so your diary never feels empty.
+            </p>
+            <div class="nf-hero-cta">
+                <a href="{% url 'registration' %}" class="btn btn-primary">Get Started <i class="bx bx-right-arrow-alt"></i></a>
+                <a href="{% url 'user_login' %}" class="btn btn-secondary"><i class="bx bx-log-in"></i> Sign In</a>
             </div>
         </div>
+        <div class="nf-hero-art" aria-hidden="true">
+            <svg class="nf-illus" viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                        <stop stop-color="#E50914"/><stop offset="1" stop-color="#B24BFF"/>
+                    </linearGradient>
+                    <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0">
+                        <stop stop-color="#00F0FF"/><stop offset="1" stop-color="#E50914"/>
+                    </linearGradient>
+                    <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                </defs>
+                <rect x="70" y="40" width="220" height="280" rx="22" fill="#16161C" stroke="url(#g1)" stroke-width="3" filter="url(#glow)"/>
+                <rect x="92" y="70" width="176" height="18" rx="9" fill="#2A2A36"/>
+                <rect x="92" y="104" width="140" height="12" rx="6" fill="#2A2A36"/>
+                <rect x="92" y="130" width="160" height="12" rx="6" fill="#2A2A36"/>
+                <rect x="92" y="156" width="120" height="12" rx="6" fill="#2A2A36"/>
+                <rect x="92" y="200" width="176" height="70" rx="14" fill="url(#g2)" opacity="0.35"/>
+                <circle cx="320" cy="90" r="46" fill="#12121A" stroke="#00F0FF" stroke-width="3" filter="url(#glow)"/>
+                <path d="M305 90h30M320 75v30" stroke="#00F0FF" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="340" cy="250" r="34" fill="#12121A" stroke="#B24BFF" stroke-width="3" filter="url(#glow)"/>
+                <path d="M328 250h24M340 238v24" stroke="#B24BFF" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+                <rect x="250" y="160" width="120" height="56" rx="16" fill="#1A1A24" stroke="#E50914" stroke-width="2" filter="url(#glow)"/>
+                <text x="270" y="194" fill="#fff" font-family="Segoe UI, sans-serif" font-size="18" font-weight="700">NOTE +</text>
+            </svg>
+        </div>
+    </section>
+
+    <section class="nf-section">
+        <h2 class="nf-section-title nf-reveal">Power features</h2>
+        <p class="nf-section-sub nf-reveal">Everything you need to keep life, study & work notes alive with neon energy.</p>
+        <div class="nf-rail">
+            <div class="nf-rail-tile nf-reveal">
+                <div class="nf-rank">1</div>
+                <div class="nf-icon-badge"><i class="bx bx-folder"></i></div>
+                <h3>Smart Categories</h3>
+                <p>Group ideas the way your brain works.</p>
+            </div>
+            <div class="nf-rail-tile nf-reveal">
+                <div class="nf-rank">2</div>
+                <div class="nf-icon-badge cyan"><i class="bx bx-edit"></i></div>
+                <h3>Living Notes</h3>
+                <p>Titles, details & history in one glow.</p>
+            </div>
+            <div class="nf-rail-tile nf-reveal">
+                <div class="nf-rank">3</div>
+                <div class="nf-icon-badge purple"><i class="bx bx-search"></i></div>
+                <h3>Lightning Search</h3>
+                <p>Find any note by title in seconds.</p>
+            </div>
+            <div class="nf-rail-tile nf-reveal">
+                <div class="nf-rank">4</div>
+                <div class="nf-icon-badge green"><i class="bx bx-shield-quarter"></i></div>
+                <h3>Secure Access</h3>
+                <p>Your diary stays behind your login.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="nf-section">
+        <h2 class="nf-section-title nf-reveal">Why creators love eDiary</h2>
+        <div class="nf-feature-grid">
+            <article class="nf-feature-card nf-reveal">
+                <div class="nf-icon-badge"><i class="bx bxs-bolt"></i></div>
+                <h3>Instant flow</h3>
+                <p>Capture thoughts fast, expand later with history entries.</p>
+            </article>
+            <article class="nf-feature-card nf-reveal">
+                <div class="nf-icon-badge cyan"><i class="bx bxs-magic-wand"></i></div>
+                <h3>Visual energy</h3>
+                <p>Neon accents and motion that make daily logging feel exciting.</p>
+            </article>
+            <article class="nf-feature-card nf-reveal">
+                <div class="nf-icon-badge purple"><i class="bx bxs-grid-alt"></i></div>
+                <h3>Clean structure</h3>
+                <p>Ordered menus and clear cards — never get lost.</p>
+            </article>
+            <article class="nf-feature-card nf-reveal">
+                <div class="nf-icon-badge green"><i class="bx bxs-devices"></i></div>
+                <h3>Any screen</h3>
+                <p>Looks sharp on phone, tablet, and desktop.</p>
+            </article>
+        </div>
+    </section>
+
+    <div class="nf-cta-band nf-reveal">
+        <div>
+            <h2>Ready to light up your diary?</h2>
+            <p>Create an account and start writing in under a minute.</p>
+        </div>
+        <a href="{% url 'registration' %}" class="btn btn-primary">Create free account <i class="bx bx-rocket"></i></a>
     </div>
+
+    <footer class="nf-landing-footer">
+        <p><i class="bx bx-envelope"></i> New here? <a href="{% url 'registration' %}">Register</a> · Already joined? <a href="{% url 'user_login' %}">Sign In</a></p>
+        <p style="margin-top:12px;font-size:0.8rem;">e-Diary Management System &copy; <script>document.write(new Date().getFullYear());</script></p>
+    </footer>
 </div>
-
-<style>
-    /* Ensuring the image is fully responsive */
-    .image-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    .responsive-img {
-        width: 100%;
-        max-width: 1000px; /* Max width to maintain original size */
-        height: auto;
-        border-radius: 15px;
-    }
-
-    @media (max-width: 1200px) {
-        .responsive-img {
-            max-width: 1200px; /* Adjusting for medium screens */
-        }
-    }
-
-    @media (max-width: 768px) {
-        .responsive-img {
-            max-width: 600px; /* Adjusting for tablets */
-        }
-    }
-
-    @media (max-width: 576px) {
-        .responsive-img {
-            max-width: 100%; /* Full width for smaller screens */
-        }
-    }
-</style>
-
 {% endblock %}

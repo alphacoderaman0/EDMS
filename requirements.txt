@@ -4,3 +4,4 @@ pymongo>=3.12,<4.0
 dnspython>=2.0,<3.0
 python-dotenv
 whitenoise
+Pillow>=9.0

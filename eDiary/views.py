@@ -170,6 +170,8 @@ def profile(request):
         signup.user.first_name = fname
         signup.user.last_name = lname
         signup.mobileNumber = mob
+        if request.FILES.get('profileImage'):
+            signup.profileImage = request.FILES['profileImage']
         try:
             signup.save()
             signup.user.save()

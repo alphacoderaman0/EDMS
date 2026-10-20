@@ -139,6 +139,9 @@ $(function () {
 
 });
 
-/* perfect scrol bar */
-new PerfectScrollbar('.header-message-list');
-new PerfectScrollbar('.header-notifications-list');
+/* perfect scrollbar — only if plugin + targets exist */
+if (typeof PerfectScrollbar !== "undefined") {
+  document.querySelectorAll(".header-message-list, .header-notifications-list").forEach(function (el) {
+    try { new PerfectScrollbar(el); } catch (e) {}
+  });
+}

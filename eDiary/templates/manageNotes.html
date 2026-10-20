@@ -2,32 +2,27 @@
 {% load static %}
 {% block main %}
 <div class="page-wrapper">
-
     <div class="page-content-wrapper">
         <div class="page-content">
-
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                 <div class="breadcrumb-title pe-3">Notes</div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
-                            <li class="breadcrumb-item"><a href="{% url 'user_home' %}"><i
-                                        class="bx bx-home-alt"></i></a>
-                            </li>
+                            <li class="breadcrumb-item"><a href="{% url 'user_home' %}"><i class="bx bx-home-alt"></i></a></li>
                             <li class="breadcrumb-item active" aria-current="page">Manage Notes</li>
                         </ol>
                     </nav>
                 </div>
             </div>
 
-
-            <div class="row">
-                <div class="radius-15 col-xl-5 mx-auto">
-
+            <div class="row g-3">
+                <div class="col-xl-5">
                     <div class="card">
                         <div class="card-body">
-                            <div class="card-title">
-                                <h4 class="mb-0">Add Notes</h4>
+                            <div class="nf-card-head">
+                                <span class="nf-icon-badge"><i class="bx bx-edit"></i></span>
+                                <div class="card-title mb-0"><h4 class="mb-0">Add Notes</h4></div>
                             </div>
                             <hr>
                             <form method="post">
@@ -37,7 +32,7 @@
                                     <select name="category" class="form-control" required>
                                         <option value="">Select Category</option>
                                         {% for i in category %}
-                                        <option value="{{i.id}}">{{i.categoryName}}</option>
+                                        <option value="{{ i.id }}">{{ i.categoryName }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -51,7 +46,6 @@
                                     <textarea name="noteDescription" placeholder="Enter Notes Description"
                                         class="form-control" required></textarea>
                                 </div>
-
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary px-5">Submit</button>
                                 </div>
@@ -60,41 +54,48 @@
                     </div>
                 </div>
 
-                <div class="card radius-15 col-xl-7">
-                    <div class="card-body">
-                        <div class="card-title">
-                            <h4 class="mb-0">Notes List</h4>
-                        </div>
-                        <hr />
-                        <div class="table-responsive">
-                            <table class="table mb-0">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Notes Title</th>
-                                        <th scope="col">Category</th>
-                                        <th scope="col">Creation Date</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {% for i in notes %}
-                                    <tr>
-                                        <th scope="row">{{forloop.counter}}</th>
-                                        <td>{{i.noteTitle}}</td>
-                                        <td>{{i.category.categoryName}}</td>
-                                        <td>{{i.CreationDate}}</td>
-                                        <td><a href="{% url 'editNotes' i.id %}" class="btn btn-info">Edit</a> |
-                                            <a href="{% url 'viewNotes' i.id %}" class="btn btn-success">View</a> |<a
-                                                href="{% url 'deleteNotes' i.id %}"
-                                                onclick="return confirm('Are you sure to Delete')"
-                                                class="btn btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+                <div class="col-xl-7">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="nf-card-head">
+                                <span class="nf-icon-badge purple"><i class="bx bx-book-content"></i></span>
+                                <div class="card-title mb-0"><h4 class="mb-0">Notes List</h4></div>
+                            </div>
+                            <hr />
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Notes Title</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Creation Date</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in notes %}
+                                        <tr>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>{{ i.noteTitle }}</td>
+                                            <td>{{ i.category.categoryName }}</td>
+                                            <td>{{ i.CreationDate }}</td>
+                                            <td>
+                                                <a href="{% url 'editNotes' i.id %}" class="btn btn-info btn-icon" title="Edit" aria-label="Edit"><i class="bx bx-edit-alt"></i></a>
+                                                <a href="{% url 'viewNotes' i.id %}" class="btn btn-success btn-icon" title="View" aria-label="View"><i class="bx bx-show"></i></a>
+                                                <a href="{% url 'deleteNotes' i.id %}"
+                                                    onclick="return confirm('Are you sure to Delete')"
+                                                    class="btn btn-danger btn-icon" title="Delete" aria-label="Delete"><i class="bx bx-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="5" class="nf-empty">No notes yet.</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,17 +105,9 @@
 </div>
 
 {% if error == "no" %}
-<script>
-    alert('New Notes has been Added.');
-
-</script>
+<script>nfToast('New note has been added.', 'success');</script>
 {% endif %}
-
 {% if error == "yes" %}
-<script>
-    alert('Something went Wrong. Try Again...');
-
-</script>
+<script>nfToast('Something went wrong. Please try again.', 'error');</script>
 {% endif %}
-
 {% endblock %}
