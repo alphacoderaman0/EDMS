@@ -1,31 +1,40 @@
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
-from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
+# Load local .env if present (Vercel injects env vars directly)
+load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 
-application = get_wsgi_application()
-# Load .env file
-load_dotenv()
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+DEBUG = os.getenv('DEBUG', 'False').strip().lower() in ('true', '1', 'yes')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'id6=b(ven$mqn)8u47o+pu=c5d))v634zt3+b6^n$fwc0^^7@#'
+ALLOWED_HOSTS = [
+    '.vercel.app',
+    '.now.sh',
+    'localhost',
+    '127.0.0.1',
+]
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh','localhost' , 'http://127.0.0.1/']
-
-
-# Application definition
+# Django 3.2 does not support origin wildcards; build from Vercel env vars.
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
+for _host in (
+    os.getenv('VERCEL_URL'),
+    os.getenv('VERCEL_PROJECT_PRODUCTION_URL'),
+    os.getenv('CSRF_TRUSTED_ORIGIN'),  # optional full origin, e.g. https://my-app.vercel.app
+):
+    if not _host:
+        continue
+    if _host.startswith('http://') or _host.startswith('https://'):
+        CSRF_TRUSTED_ORIGINS.append(_host)
+    else:
+        CSRF_TRUSTED_ORIGINS.append(f'https://{_host}')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,8 +47,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -47,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 ROOT_URLCONF = 'eDiary_ManagementSystem.urls'
 
 TEMPLATES = [
@@ -67,84 +77,42 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'eDiary_ManagementSystem.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'ediary',  # Change this to your actual MongoDB database name
-        'ENFORCE_SCHEMA': False,  # Keep it False to allow flexible schemas
+        'NAME': os.getenv('DB_NAME', 'ediary'),
+        'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host':os.getenv('DATABASE_URL'),
-            'tls': True
-        }
+            'host': os.getenv('DATABASE_URL'),
+            'tlsAllowInvalidCertificates': True,
+            'tls': True,
+        },
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'PASSWORD': 'e63G*cegB34-gfgb4A*64--fdegcD2c2',
-#         'HOST': 'roundhouse.proxy.rlwy.net',
-#         'PORT': '12902',
-#     }
-# }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 STATIC_URL = '/static/'
-MEDIA_URL='/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+STATIC_ROOT = BASE_DIR / 'staticfiles_build' / 'static'
 
-DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+# Only add project-level static dir if it exists (avoids collectstatic failures on Vercel)
+_static_dir = BASE_DIR / 'static'
+STATICFILES_DIRS = [_static_dir] if _static_dir.is_dir() and any(_static_dir.iterdir()) else []
 
-# Static Files Here
-STATICFILES_DIRS = os.path.join(BASE_DIR,'static'),
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

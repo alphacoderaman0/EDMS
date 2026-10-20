@@ -1,16 +1,8 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "manage.py",
-        "use": "@vercel/python"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "manage.py"
-      }
-    ]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "eDiary_ManagementSystem/wsgi.py": {
+      "maxDuration": 60
+    }
   }
-  
+}
