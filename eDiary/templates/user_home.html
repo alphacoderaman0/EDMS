@@ -9,6 +9,33 @@
                 <p style="color:var(--nf-ink-soft);margin:6px 0 0;">Welcome back — your neon workspace is ready.</p>
             </div>
 
+            {% if not signup.email_verified %}
+            <div class="nf-banner nf-banner-warn nf-reveal">
+                <div>
+                    <strong>Verify your email</strong>
+                    <p>Confirm your address to keep your account secure.</p>
+                </div>
+                <form method="post" action="{% url 'resend_verification' %}" class="nf-loading-form m-0">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary">Resend email</button>
+                </form>
+            </div>
+            {% endif %}
+
+            {% if show_onboarding %}
+            <div class="nf-onboard nf-reveal" id="onboardPanel">
+                <div class="nf-onboard-card">
+                    <span class="nf-icon-badge"><i class="bx bx-party"></i></span>
+                    <h2>Welcome to eDiary</h2>
+                    <p>Three quick steps: create a category, add a note, then search anytime from the top bar.</p>
+                    <form method="post" action="{% url 'complete_onboarding' %}" class="nf-loading-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Start with a category <i class="bx bx-right-arrow-alt"></i></button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+
             <div class="nf-quick-grid nf-reveal">
                 <a href="{% url 'manageCategory' %}" class="nf-quick-card">
                     <span class="nf-icon-badge"><i class="bx bx-folder-plus"></i></span>
@@ -102,4 +129,7 @@
         </div>
     </div>
 </div>
+{% if verify_sent %}
+<script>nfToast('Verification email sent. Check your inbox (or server console in local mode).', 'success');</script>
+{% endif %}
 {% endblock %}

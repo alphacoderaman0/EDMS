@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Your private eDiary workspace — notes, categories, and search." />
     <title>eDiary Management System</title>
     <link rel="icon" href="{% static 'assets/images/logo-icon.png' %}" type="image/png" />
     <link href="{% static 'assets/plugins/metismenu/css/metisMenu.min.css' %}" rel="stylesheet" />
@@ -11,6 +12,15 @@
     <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}" />
     <link rel="stylesheet" href="{% static 'assets/css/app.css' %}" />
     <link rel="stylesheet" href="{% static 'assets/css/nf-theme.css' %}" />
+    {% if ga_measurement_id %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga_measurement_id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ ga_measurement_id }}');
+    </script>
+    {% endif %}
     <script>
       (function () {
         try {
@@ -123,7 +133,9 @@
         <div class="overlay toggle-btn-mobile"></div>
         <a href="javascript:;" class="back-to-top" aria-label="Back to top"><i class="bx bxs-up-arrow-alt"></i></a>
         <div class="footer">
-            <p class="mb-0">e-Diary &copy; <script>document.write(new Date().getFullYear());</script> — Stay organized. Stay inspired.</p>
+            <p class="mb-0">e-Diary &copy; <script>document.write(new Date().getFullYear());</script> —
+              <a href="{% url 'privacy' %}">Privacy</a> · <a href="{% url 'terms' %}">Terms</a>
+            </p>
         </div>
     </div>
 

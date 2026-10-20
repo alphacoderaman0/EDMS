@@ -25,12 +25,12 @@
                                 <div class="card-title mb-0"><h4 class="mb-0">Add Category</h4></div>
                             </div>
                             <hr>
-                            <form method="post">
+                            <form method="post" class="nf-loading-form" novalidate>
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <label class="form-label">Category Name</label>
                                     <input type="text" name="categoryName" placeholder="Enter Category Name"
-                                        class="form-control" required>
+                                        class="form-control" required maxlength="150">
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary px-5">Submit</button>
@@ -90,7 +90,7 @@
 {% if error == "no" %}
 <script>nfToast('New category has been added.', 'success');</script>
 {% endif %}
-{% if error == "yes" %}
-<script>nfToast('Something went wrong. Please try again.', 'error');</script>
+{% if error == "yes" or error == "rate" %}
+<script>nfToast('{{ error_message|default:"Something went wrong."|escapejs }}', 'error');</script>
 {% endif %}
 {% endblock %}

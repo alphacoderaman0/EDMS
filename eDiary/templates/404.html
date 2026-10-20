@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Page not found — eDiary" />
+  <title>404 — Page not found | eDiary</title>
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/nf-theme.css' %}" />
+</head>
+<body class="nf-auth">
+  <div class="nf-auth-shell">
+    <nav class="nf-auth-nav">
+      <a href="{% url 'index' %}" class="nf-brand">eDiary</a>
+    </nav>
+    <div class="nf-auth-panel text-center">
+      <div class="nf-icon-badge mx-auto mb-3" style="width:56px;height:56px;font-size:1.6rem;"><i class="bx bx-error-alt"></i></div>
+      <h1>404</h1>
+      <p class="nf-auth-meta" style="margin-top:0;">This page wandered off your diary.</p>
+      <a class="btn btn-primary mt-3" href="{% url 'index' %}"><i class="bx bx-home"></i> Go home</a>
+    </div>
+  </div>
+</body>
+</html>

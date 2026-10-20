@@ -25,7 +25,7 @@
                                 <div class="card-title mb-0"><h4 class="mb-0">Edit Notes</h4></div>
                             </div>
                             <hr>
-                            <form method="post">
+                            <form method="post" class="nf-loading-form" novalidate>
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <label class="form-label">Category Name</label>
@@ -61,6 +61,6 @@
 <script>nfToast('Note has been updated.', 'success', { redirect: '{% url 'manageNotes' %}' });</script>
 {% endif %}
 {% if error == "yes" %}
-<script>nfToast('Something went wrong. Please try again.', 'error');</script>
+<script>nfToast('{{ error_message|default:"Something went wrong."|escapejs }}', 'error');</script>
 {% endif %}
 {% endblock %}

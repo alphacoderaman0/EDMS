@@ -25,7 +25,7 @@
                                 <div class="card-title mb-0"><h4 class="mb-0">Update Profile</h4></div>
                             </div>
                             <hr>
-                            <form method="post" enctype="multipart/form-data">
+                            <form method="post" enctype="multipart/form-data" class="nf-loading-form" novalidate>
                                 {% csrf_token %}
                                 <div class="nf-avatar-upload">
                                     {% if signup.profileImage %}
@@ -68,10 +68,19 @@
                                     <label class="form-label">Registration Date</label>
                                     <input type="text" class="form-control" value="{{ signup.regDate }}" readonly>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 d-flex flex-wrap gap-2">
                                     <button type="submit" class="btn btn-primary px-5"><i class="bx bx-save"></i> Update</button>
+                                    <a href="{% url 'delete_account' %}" class="btn btn-danger"><i class="bx bx-trash"></i> Delete account</a>
                                 </div>
                             </form>
+                            {% if not signup.email_verified %}
+                            <hr>
+                            <p style="color:var(--nf-ink-soft);font-size:0.9rem;">Email not verified yet.</p>
+                            <form method="post" action="{% url 'resend_verification' %}" class="nf-loading-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-secondary">Resend verification email</button>
+                            </form>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -107,6 +116,6 @@
 <script>nfToast('Profile has been updated.', 'success', { redirect: '{% url 'user_home' %}' });</script>
 {% endif %}
 {% if error == "yes" %}
-<script>nfToast('Something went wrong. Please try again.', 'error');</script>
+<script>nfToast('{{ error_message|default:"Something went wrong."|escapejs }}', 'error');</script>
 {% endif %}
 {% endblock %}

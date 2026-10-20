@@ -7,28 +7,38 @@
     <div class="nf-orb nf-orb-2"></div>
     <div class="nf-orb nf-orb-3"></div>
 
-    <nav class="nf-landing-nav">
+    <nav class="nf-landing-nav" id="landingNav" aria-label="Primary">
         <a href="{% url 'index' %}" class="nf-brand">eDiary</a>
-        <div class="nf-landing-nav-actions">
-            <a href="{% url 'registration' %}" class="btn btn-secondary"><i class="bx bx-user-plus"></i> Register</a>
-            <a href="{% url 'user_login' %}" class="btn btn-nf-signin">Sign In</a>
+        <button type="button" class="nf-nav-toggle" id="landingNavToggle" aria-expanded="false" aria-controls="landingNavLinks" aria-label="Open menu">
+            <i class="bx bx-menu"></i>
+        </button>
+        <div class="nf-landing-nav-links" id="landingNavLinks">
+            <a href="#features">Features</a>
+            <a href="#how">How it works</a>
+            <a href="#security">Security</a>
+            <a href="#faq">FAQ</a>
+            <div class="nf-landing-nav-actions">
+                <a href="{% url 'registration' %}" class="btn btn-secondary"><i class="bx bx-user-plus"></i> Register</a>
+                <a href="{% url 'user_login' %}" class="btn btn-nf-signin">Sign In</a>
+            </div>
         </div>
     </nav>
 
     <section class="nf-hero">
         <div class="nf-hero-inner">
-            <div class="nf-pill"><i class="bx bxs-magic-wand"></i> Neon-dark productivity space</div>
+            <div class="nf-pill nf-pill-pulse"><i class="bx bxs-magic-wand"></i> Neon-dark productivity space</div>
             <h1>Write boldly.<br>Organize instantly.</h1>
             <p class="nf-hero-lead">
-                Categories, notes, search & history — wrapped in a cinematic glow so your diary never feels empty.
+                Categories, notes, search &amp; history — wrapped in a cinematic glow so your diary never feels empty.
             </p>
             <div class="nf-hero-cta">
                 <a href="{% url 'registration' %}" class="btn btn-primary">Get Started <i class="bx bx-right-arrow-alt"></i></a>
-                <a href="{% url 'user_login' %}" class="btn btn-secondary"><i class="bx bx-log-in"></i> Sign In</a>
+                <a href="#features" class="btn btn-secondary"><i class="bx bx-play-circle"></i> Explore features</a>
             </div>
         </div>
-        <div class="nf-hero-art" aria-hidden="true">
-            <svg class="nf-illus" viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <figure class="nf-hero-art">
+            <svg class="nf-illus" viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="nf-hero-caption">
+                <title id="nf-hero-caption">Illustrated neon notebook with glowing note cards</title>
                 <defs>
                     <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
                         <stop stop-color="#E50914"/><stop offset="1" stop-color="#B24BFF"/>
@@ -51,63 +61,175 @@
                 <rect x="250" y="160" width="120" height="56" rx="16" fill="#1A1A24" stroke="#E50914" stroke-width="2" filter="url(#glow)"/>
                 <text x="270" y="194" fill="#fff" font-family="Segoe UI, sans-serif" font-size="18" font-weight="700">NOTE +</text>
             </svg>
+            <figcaption class="nf-hero-caption">Your neon notebook — categories, notes, and search in one glow.</figcaption>
+        </figure>
+    </section>
+
+    <section class="nf-stats nf-reveal" aria-label="Highlights">
+        <div class="nf-stat">
+            <span class="nf-stat-icon"><i class="bx bx-folder-open"></i></span>
+            <strong class="nf-count" data-count="∞">∞</strong>
+            <span>Categories you create</span>
+        </div>
+        <div class="nf-stat">
+            <span class="nf-stat-icon cyan"><i class="bx bx-note"></i></span>
+            <strong class="nf-count" data-count="100" data-suffix="%">0</strong>
+            <span>Private to your account</span>
+        </div>
+        <div class="nf-stat">
+            <span class="nf-stat-icon purple"><i class="bx bx-search-alt-2"></i></span>
+            <strong class="nf-count" data-count="1" data-suffix="s">0</strong>
+            <span>Search by note title</span>
+        </div>
+        <div class="nf-stat">
+            <span class="nf-stat-icon green"><i class="bx bx-shield-quarter"></i></span>
+            <strong class="nf-count" data-count="24" data-suffix="/7">0</strong>
+            <span>Your data stays yours</span>
         </div>
     </section>
 
-    <section class="nf-section">
+    <section class="nf-section" id="features">
         <h2 class="nf-section-title nf-reveal">Power features</h2>
-        <p class="nf-section-sub nf-reveal">Everything you need to keep life, study & work notes alive with neon energy.</p>
+        <p class="nf-section-sub nf-reveal">Everything you need to keep life, study &amp; work notes alive with neon energy.</p>
         <div class="nf-rail">
             <div class="nf-rail-tile nf-reveal">
-                <div class="nf-rank">1</div>
+                <div class="nf-rank">01</div>
                 <div class="nf-icon-badge"><i class="bx bx-folder"></i></div>
                 <h3>Smart Categories</h3>
-                <p>Group ideas the way your brain works.</p>
+                <p>Group ideas the way your brain works — school, work, personal, or anything else.</p>
             </div>
             <div class="nf-rail-tile nf-reveal">
-                <div class="nf-rank">2</div>
+                <div class="nf-rank">02</div>
                 <div class="nf-icon-badge cyan"><i class="bx bx-edit"></i></div>
                 <h3>Living Notes</h3>
-                <p>Titles, details & history in one glow.</p>
+                <p>Titles, descriptions &amp; history entries so thoughts can grow over time.</p>
             </div>
             <div class="nf-rail-tile nf-reveal">
-                <div class="nf-rank">3</div>
+                <div class="nf-rank">03</div>
                 <div class="nf-icon-badge purple"><i class="bx bx-search"></i></div>
                 <h3>Lightning Search</h3>
-                <p>Find any note by title in seconds.</p>
+                <p>Find any note by title in seconds from the top bar or search page.</p>
             </div>
             <div class="nf-rail-tile nf-reveal">
-                <div class="nf-rank">4</div>
-                <div class="nf-icon-badge green"><i class="bx bx-shield-quarter"></i></div>
-                <h3>Secure Access</h3>
-                <p>Your diary stays behind your login.</p>
+                <div class="nf-rank">04</div>
+                <div class="nf-icon-badge green"><i class="bx bx-history"></i></div>
+                <h3>Note History</h3>
+                <p>Append updates without losing earlier details — a living timeline per note.</p>
             </div>
+        </div>
+
+        <div class="nf-feature-grid nf-feature-grid-wide" style="margin-top:1.75rem;">
+            <article class="nf-feature-card nf-reveal">
+                <div class="nf-icon-badge"><i class="bx bxs-bolt"></i></div>
+                <h3>Instant capture</h3>
+                <p>Create a category, drop a note, and keep moving — no cluttered setup wizards.</p>
+            </article>
+            <article class="nf-feature-card nf-reveal">
+                <div class="nf-icon-badge cyan"><i class="bx bxs-user-check"></i></div>
+                <h3>Email verification</h3>
+                <p>Confirm your email after signup so account recovery stays trustworthy.</p>
+            </article>
+            <article class="nf-feature-card nf-reveal">
+                <div class="nf-icon-badge purple"><i class="bx bxs-lock-alt"></i></div>
+                <h3>Password reset</h3>
+                <p>Forgot your password? Reset securely with a one-time email link.</p>
+            </article>
+            <article class="nf-feature-card nf-reveal">
+                <div class="nf-icon-badge green"><i class="bx bxs-moon"></i></div>
+                <h3>Light &amp; dark</h3>
+                <p>Switch themes anytime — neon cinema at night, clean light by day.</p>
+            </article>
+            <article class="nf-feature-card nf-reveal">
+                <div class="nf-icon-badge"><i class="bx bxs-devices"></i></div>
+                <h3>Mobile ready</h3>
+                <p>Responsive layout so you can jot ideas from phone, tablet, or desktop.</p>
+            </article>
+            <article class="nf-feature-card nf-reveal">
+                <div class="nf-icon-badge cyan"><i class="bx bxs-user-circle"></i></div>
+                <h3>Profile &amp; avatar</h3>
+                <p>Update your name, mobile, and profile image from a simple profile page.</p>
+            </article>
         </div>
     </section>
 
-    <section class="nf-section">
-        <h2 class="nf-section-title nf-reveal">Why creators love eDiary</h2>
-        <div class="nf-feature-grid">
-            <article class="nf-feature-card nf-reveal">
-                <div class="nf-icon-badge"><i class="bx bxs-bolt"></i></div>
-                <h3>Instant flow</h3>
-                <p>Capture thoughts fast, expand later with history entries.</p>
+    <section class="nf-section nf-how" id="how">
+        <h2 class="nf-section-title nf-reveal">How it works</h2>
+        <p class="nf-section-sub nf-reveal">Three steps from empty page to organized neon diary.</p>
+        <ol class="nf-steps">
+            <li class="nf-step nf-reveal">
+                <span class="nf-step-num">1</span>
+                <span class="nf-step-icon"><i class="bx bx-user-plus"></i></span>
+                <div>
+                    <h3>Create your account</h3>
+                    <p>Register with email, verify when prompted, then sign in to your private workspace.</p>
+                </div>
+            </li>
+            <li class="nf-step nf-reveal">
+                <span class="nf-step-num">2</span>
+                <span class="nf-step-icon cyan"><i class="bx bx-folder-plus"></i></span>
+                <div>
+                    <h3>Add categories</h3>
+                    <p>Build the shelves first — Work, Study, Ideas — then drop notes into the right place.</p>
+                </div>
+            </li>
+            <li class="nf-step nf-reveal">
+                <span class="nf-step-num">3</span>
+                <span class="nf-step-icon purple"><i class="bx bx-edit-alt"></i></span>
+                <div>
+                    <h3>Write &amp; revisit</h3>
+                    <p>Add notes, append history, search by title, and edit anytime from your dashboard.</p>
+                </div>
+            </li>
+        </ol>
+    </section>
+
+    <section class="nf-section" id="security">
+        <h2 class="nf-section-title nf-reveal">Built for private notes</h2>
+        <p class="nf-section-sub nf-reveal">Security basics that matter when the diary is yours alone.</p>
+        <div class="nf-info-grid">
+            <article class="nf-info-tile nf-reveal">
+                <div class="nf-icon-badge"><i class="bx bx-lock"></i></div>
+                <h3>Account login</h3>
+                <p>Notes live behind your session. Logout clears access on shared devices.</p>
             </article>
-            <article class="nf-feature-card nf-reveal">
-                <div class="nf-icon-badge cyan"><i class="bx bxs-magic-wand"></i></div>
-                <h3>Visual energy</h3>
-                <p>Neon accents and motion that make daily logging feel exciting.</p>
+            <article class="nf-info-tile nf-reveal">
+                <div class="nf-icon-badge cyan"><i class="bx bx-filter-alt"></i></div>
+                <h3>Your data only</h3>
+                <p>Categories and notes are scoped to your account — other users can’t open yours.</p>
             </article>
-            <article class="nf-feature-card nf-reveal">
-                <div class="nf-icon-badge purple"><i class="bx bxs-grid-alt"></i></div>
-                <h3>Clean structure</h3>
-                <p>Ordered menus and clear cards — never get lost.</p>
+            <article class="nf-info-tile nf-reveal">
+                <div class="nf-icon-badge purple"><i class="bx bx-mail-send"></i></div>
+                <h3>Safe recovery</h3>
+                <p>Password reset and email verification use time-limited links, not permanent secrets.</p>
             </article>
-            <article class="nf-feature-card nf-reveal">
-                <div class="nf-icon-badge green"><i class="bx bxs-devices"></i></div>
-                <h3>Any screen</h3>
-                <p>Looks sharp on phone, tablet, and desktop.</p>
+            <article class="nf-info-tile nf-reveal">
+                <div class="nf-icon-badge green"><i class="bx bx-trash"></i></div>
+                <h3>Delete account</h3>
+                <p>Need a clean break? Delete your account from Profile when you’re done.</p>
             </article>
+        </div>
+    </section>
+
+    <section class="nf-section" id="faq">
+        <h2 class="nf-section-title nf-reveal">Questions, answered</h2>
+        <p class="nf-section-sub nf-reveal">Quick answers before you jump in.</p>
+        <div class="nf-faq">
+            <details class="nf-faq-item nf-reveal" open>
+                <summary><i class="bx bx-help-circle"></i> Is eDiary free to use?</summary>
+                <p>Yes — create an account and start organizing notes right away.</p>
+            </details>
+            <details class="nf-faq-item nf-reveal">
+                <summary><i class="bx bx-help-circle"></i> Can I access my notes on phone?</summary>
+                <p>The UI is responsive. Sign in from any modern browser on phone or desktop.</p>
+            </details>
+            <details class="nf-faq-item nf-reveal">
+                <summary><i class="bx bx-help-circle"></i> What if I forget my password?</summary>
+                <p>Use Forgot password on the Sign In page. We’ll email a reset link to your registered address.</p>
+            </details>
+            <details class="nf-faq-item nf-reveal">
+                <summary><i class="bx bx-help-circle"></i> Can I remove my data later?</summary>
+                <p>Open Profile → Delete account. Confirm with DELETE and your password to wipe your diary data.</p>
+            </details>
         </div>
     </section>
 
@@ -116,12 +238,37 @@
             <h2>Ready to light up your diary?</h2>
             <p>Create an account and start writing in under a minute.</p>
         </div>
-        <a href="{% url 'registration' %}" class="btn btn-primary">Create free account <i class="bx bx-rocket"></i></a>
+        <div class="nf-cta-actions">
+            <a href="{% url 'registration' %}" class="btn btn-primary">Create free account <i class="bx bx-rocket"></i></a>
+            <a href="{% url 'user_login' %}" class="btn btn-secondary">Sign In</a>
+        </div>
     </div>
 
     <footer class="nf-landing-footer">
-        <p><i class="bx bx-envelope"></i> New here? <a href="{% url 'registration' %}">Register</a> · Already joined? <a href="{% url 'user_login' %}">Sign In</a></p>
-        <p style="margin-top:12px;font-size:0.8rem;">e-Diary Management System &copy; <script>document.write(new Date().getFullYear());</script></p>
+        <div class="nf-footer-grid">
+            <div>
+                <a href="{% url 'index' %}" class="nf-brand">eDiary</a>
+                <p class="nf-footer-tag">Cinematic notes for a focused life.</p>
+            </div>
+            <div>
+                <h4>Product</h4>
+                <a href="#features">Features</a>
+                <a href="#how">How it works</a>
+                <a href="#security">Security</a>
+            </div>
+            <div>
+                <h4>Account</h4>
+                <a href="{% url 'registration' %}">Register</a>
+                <a href="{% url 'user_login' %}">Sign In</a>
+                <a href="{% url 'password_reset' %}">Reset password</a>
+            </div>
+            <div>
+                <h4>Legal</h4>
+                <a href="{% url 'privacy' %}">Privacy</a>
+                <a href="{% url 'terms' %}">Terms</a>
+            </div>
+        </div>
+        <p class="nf-footer-copy">e-Diary Management System &copy; <script>document.write(new Date().getFullYear());</script></p>
     </footer>
 </div>
 {% endblock %}

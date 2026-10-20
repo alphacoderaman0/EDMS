@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block body_class %}nf-landing-page{% endblock %}
+{% block main %}
+<div class="nf-landing">
+  <nav class="nf-landing-nav">
+    <a href="{% url 'index' %}" class="nf-brand">eDiary</a>
+    <a href="{% url 'index' %}" class="btn btn-secondary">Back</a>
+  </nav>
+  <section class="nf-section" style="padding-top:6rem;">
+    <h1 class="nf-section-title">Terms of Service</h1>
+    <p class="nf-section-sub">Last updated: {% now "F j, Y" %}</p>
+    <div class="card"><div class="card-body">
+      <p>By using eDiary you agree to keep your login credentials private and use the service lawfully.</p>
+      <p>You own the content of your notes. Do not upload illegal or harmful material.</p>
+      <p>The service is provided as-is. We may update features or these terms over time.</p>
+      <p>You may delete your account at any time from Profile → Delete account.</p>
+      <p><a href="{% url 'privacy' %}">Privacy Policy</a></p>
+    </div></div>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'userbase.html' %}
+{% block main %}
+<div class="page-wrapper">
+  <div class="page-content-wrapper">
+    <div class="page-content">
+      <div class="row">
+        <div class="col-xl-6 mx-auto">
+          <div class="card">
+            <div class="card-body">
+              <div class="nf-card-head">
+                <span class="nf-icon-badge"><i class="bx bx-trash"></i></span>
+                <div class="card-title mb-0"><h4 class="mb-0">Delete account</h4></div>
+              </div>
+              <hr>
+              <p style="color:var(--nf-ink-soft);">This permanently deletes your profile, categories, and notes. This cannot be undone.</p>
+              <form method="post" class="nf-loading-form" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label class="form-label">Type DELETE to confirm</label>
+                  <input type="text" name="confirm" class="form-control" placeholder="DELETE" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Your password</label>
+                  <input type="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-danger"><i class="bx bx-trash"></i> Delete my account</button>
+                <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% if error == "yes" %}
+<script>nfToast('{{ error_message|escapejs }}', 'error');</script>
+{% endif %}
+{% endblock %}

@@ -4,6 +4,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="Sign in to your eDiary account" />
 	<title>Sign In — eDiary</title>
 	<link rel="icon" href="{% static 'assets/images/logo-icon.png' %}" type="image/png" />
 	<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
@@ -11,8 +12,6 @@
 	<link rel="stylesheet" href="{% static 'assets/css/nf-theme.css' %}" />
 </head>
 <body class="nf-auth">
-	<div class="nf-orb nf-orb-1"></div>
-	<div class="nf-orb nf-orb-2"></div>
 	<div class="nf-auth-shell">
 		<nav class="nf-auth-nav">
 			<a href="{% url 'index' %}" class="nf-brand">eDiary</a>
@@ -23,29 +22,32 @@
 				<span class="nf-icon-badge"><i class="bx bx-log-in-circle"></i></span>
 				<h1 class="mb-0" style="font-size:1.75rem !important;">Sign In</h1>
 			</div>
-			<form method="post" class="row g-3">
+			<form method="post" class="row g-3 nf-loading-form" novalidate>
 				{% csrf_token %}
 				<div class="col-12">
-					<label class="form-label">Email Address</label>
-					<input type="email" name="emailid" class="form-control" placeholder="you@email.com" required>
+					<label class="form-label" for="emailid">Email Address</label>
+					<input id="emailid" type="email" name="emailid" class="form-control" placeholder="you@email.com" required autocomplete="username">
 				</div>
 				<div class="col-12">
-					<label class="form-label">Password</label>
-					<input type="password" name="password" class="form-control" placeholder="Enter password" required>
+					<label class="form-label" for="password">Password</label>
+					<input id="password" type="password" name="password" class="form-control" placeholder="Enter password" required autocomplete="current-password">
 				</div>
 				<div class="col-12">
 					<button type="submit" class="btn btn-primary"><i class="bx bxs-lock-open"></i> Sign In</button>
 				</div>
 			</form>
-			<p class="nf-auth-meta">New to eDiary? <a href="{% url 'registration' %}">Create an account</a></p>
+			<p class="nf-auth-meta">
+				<a href="{% url 'password_reset' %}">Forgot password?</a><br>
+				New to eDiary? <a href="{% url 'registration' %}">Create an account</a>
+			</p>
 		</div>
 	</div>
 	<script src="{% static 'assets/js/nf-ui.js' %}"></script>
 	{% if error == "no" %}
 	<script>nfToast('Logged in successfully', 'success', { redirect: '{% url 'user_home' %}' });</script>
 	{% endif %}
-	{% if error == "yes" %}
-	<script>nfToast('Invalid credentials. Please try again.', 'error');</script>
+	{% if error == "yes" or error == "rate" %}
+	<script>nfToast('{{ error_message|default:"Invalid credentials."|escapejs }}', 'error');</script>
 	{% endif %}
 </body>
 </html>

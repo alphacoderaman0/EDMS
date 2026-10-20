@@ -97,7 +97,7 @@
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <form method="post" name="takeaction">
+                    <form method="post" name="takeaction" class="nf-loading-form" novalidate>
                         {% csrf_token %}
                         <div class="modal-content">
                             <div class="modal-header">
@@ -124,6 +124,6 @@
 <script>nfToast('Note details have been added.', 'success');</script>
 {% endif %}
 {% if error == "yes" %}
-<script>nfToast('Something went wrong. Please try again.', 'error');</script>
+<script>nfToast('{{ error_message|default:"Something went wrong."|escapejs }}', 'error');</script>
 {% endif %}
 {% endblock %}

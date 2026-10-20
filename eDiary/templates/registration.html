@@ -4,6 +4,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="Create your eDiary account" />
 	<title>Sign Up — eDiary</title>
 	<link rel="icon" href="{% static 'assets/images/logo-icon.png' %}" type="image/png" />
 	<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
@@ -11,8 +12,6 @@
 	<link rel="stylesheet" href="{% static 'assets/css/nf-theme.css' %}" />
 </head>
 <body class="nf-auth">
-	<div class="nf-orb nf-orb-1"></div>
-	<div class="nf-orb nf-orb-3"></div>
 	<div class="nf-auth-shell">
 		<nav class="nf-auth-nav">
 			<a href="{% url 'index' %}" class="nf-brand">eDiary</a>
@@ -23,41 +22,45 @@
 				<span class="nf-icon-badge purple"><i class="bx bx-user-plus"></i></span>
 				<h1 class="mb-0" style="font-size:1.75rem !important;">Join eDiary</h1>
 			</div>
-			<form method="post" class="row g-3">
+			<form method="post" class="row g-3 nf-loading-form" novalidate>
 				{% csrf_token %}
 				<div class="col-sm-6">
-					<label class="form-label">First Name</label>
-					<input type="text" name="firstName" class="form-control" placeholder="First name" required>
+					<label class="form-label" for="firstName">First Name</label>
+					<input id="firstName" type="text" name="firstName" class="form-control" required minlength="2">
 				</div>
 				<div class="col-sm-6">
-					<label class="form-label">Last Name</label>
-					<input type="text" name="lastName" class="form-control" placeholder="Last name" required>
+					<label class="form-label" for="lastName">Last Name</label>
+					<input id="lastName" type="text" name="lastName" class="form-control" required minlength="2">
 				</div>
 				<div class="col-12">
-					<label class="form-label">Email Address</label>
-					<input type="email" name="emailid" class="form-control" placeholder="example@gmail.com" required>
+					<label class="form-label" for="emailid">Email Address</label>
+					<input id="emailid" type="email" name="emailid" class="form-control" required>
 				</div>
 				<div class="col-12">
-					<label class="form-label">Password</label>
-					<input type="password" name="Password" class="form-control" placeholder="Create a password" required>
+					<label class="form-label" for="Password">Password</label>
+					<input id="Password" type="password" name="Password" class="form-control" required minlength="8" autocomplete="new-password">
+					<small style="color:var(--nf-ink-muted);">At least 8 characters, mix of letters and numbers.</small>
 				</div>
 				<div class="col-12">
-					<label class="form-label">Contact Number</label>
-					<input type="text" name="mobileNumber" class="form-control" placeholder="1234567890" maxlength="10" required>
+					<label class="form-label" for="mobileNumber">Contact Number</label>
+					<input id="mobileNumber" type="text" name="mobileNumber" class="form-control" required maxlength="10" pattern="\d{10}" inputmode="numeric">
 				</div>
 				<div class="col-12">
 					<button type="submit" class="btn btn-primary"><i class="bx bx-rocket"></i> Create Account</button>
 				</div>
 			</form>
-			<p class="nf-auth-meta">Already have an account? <a href="{% url 'user_login' %}">Sign in</a></p>
+			<p class="nf-auth-meta">
+				Already have an account? <a href="{% url 'user_login' %}">Sign in</a><br>
+				<a href="{% url 'terms' %}">Terms</a> · <a href="{% url 'privacy' %}">Privacy</a>
+			</p>
 		</div>
 	</div>
 	<script src="{% static 'assets/js/nf-ui.js' %}"></script>
 	{% if error == "no" %}
-	<script>nfToast('Registration successful', 'success', { redirect: '{% url 'user_login' %}' });</script>
+	<script>nfToast('Account created. Check your email to verify (or server console in local mode).', 'success', { redirect: '{% url 'user_login' %}', delay: 3200 });</script>
 	{% endif %}
-	{% if error == "yes" %}
-	<script>nfToast('Something went wrong. Please try again.', 'error');</script>
+	{% if error == "yes" or error == "rate" %}
+	<script>nfToast('{{ error_message|default:"Something went wrong."|escapejs }}', 'error');</script>
 	{% endif %}
 </body>
 </html>

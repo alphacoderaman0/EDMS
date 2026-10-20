@@ -25,7 +25,13 @@
                                 <div class="card-title mb-0"><h4 class="mb-0">Add Notes</h4></div>
                             </div>
                             <hr>
-                            <form method="post">
+                            {% if not category %}
+                            <div class="nf-empty-box">
+                                <p>No categories yet. Create one first, then add notes.</p>
+                                <a href="{% url 'manageCategory' %}" class="btn btn-primary">Add Category</a>
+                            </div>
+                            {% else %}
+                            <form method="post" class="nf-loading-form" novalidate>
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <label class="form-label">Category Name</label>
@@ -39,7 +45,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Notes Title</label>
                                     <input type="text" name="noteTitle" placeholder="Enter Notes Title"
-                                        class="form-control" required>
+                                        class="form-control" required maxlength="200">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Notes Description</label>
@@ -50,6 +56,7 @@
                                     <button type="submit" class="btn btn-primary px-5">Submit</button>
                                 </div>
                             </form>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -108,6 +115,6 @@
 <script>nfToast('New note has been added.', 'success');</script>
 {% endif %}
 {% if error == "yes" %}
-<script>nfToast('Something went wrong. Please try again.', 'error');</script>
+<script>nfToast('{{ error_message|default:"Something went wrong."|escapejs }}', 'error');</script>
 {% endif %}
 {% endblock %}

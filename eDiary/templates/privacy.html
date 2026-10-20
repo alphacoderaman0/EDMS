@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block body_class %}nf-landing-page{% endblock %}
+{% block main %}
+<div class="nf-landing">
+  <nav class="nf-landing-nav">
+    <a href="{% url 'index' %}" class="nf-brand">eDiary</a>
+    <a href="{% url 'index' %}" class="btn btn-secondary">Back</a>
+  </nav>
+  <section class="nf-section" style="padding-top:6rem;">
+    <h1 class="nf-section-title">Privacy Policy</h1>
+    <p class="nf-section-sub">Last updated: {% now "F j, Y" %}</p>
+    <div class="card"><div class="card-body">
+      <p>eDiary stores the account details you provide (name, email, mobile, profile image) and the notes/categories you create.</p>
+      <p>We use this data only to run the diary service for you. We do not sell your personal information.</p>
+      <p>Passwords are stored hashed. You can update or delete your account from Profile.</p>
+      <p>For questions, contact the site administrator.</p>
+      <p><a href="{% url 'terms' %}">Terms of Service</a></p>
+    </div></div>
+  </section>
+</div>
+{% endblock %}

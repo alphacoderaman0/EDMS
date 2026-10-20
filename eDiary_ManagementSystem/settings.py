@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
                 'eDiary.context_processors.user_signup',
+                'eDiary.context_processors.site_meta',
             ],
         },
     },
@@ -118,3 +119,73 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+LOGIN_URL = '/user_login'
+LOGIN_REDIRECT_URL = '/user_home'
+LOGOUT_REDIRECT_URL = '/'
+
+# Email — Python 3.12-safe SMTP backend (Django 3.2 stock SMTP breaks on starttls keyfile)
+_email_backend_env = os.getenv('EMAIL_BACKEND', '').strip()
+if _email_backend_env in (
+    '',
+    'django.core.mail.backends.smtp.EmailBackend',
+):
+    # Default to console when SMTP host not configured; else use our fixed backend
+    if os.getenv('EMAIL_HOST', '').strip():
+        EMAIL_BACKEND = 'eDiary.email_backend.EmailBackend'
+    else:
+        EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+elif _email_backend_env == 'django.core.mail.backends.console.EmailBackend':
+    EMAIL_BACKEND = _email_backend_env
+else:
+    # Allow explicit override, but map stock SMTP → fixed backend
+    EMAIL_BACKEND = (
+        'eDiary.email_backend.EmailBackend'
+        if 'smtp.EmailBackend' in _email_backend_env
+        else _email_backend_env
+    )
+
+EMAIL_HOST = os.getenv('EMAIL_HOST', '')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587') or 587)
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '').strip()
+# Gmail App Passwords are often copied with spaces — strip them
+EMAIL_HOST_PASSWORD = (os.getenv('EMAIL_HOST_PASSWORD', '') or '').replace(' ', '').strip()
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').strip().lower() in ('true', '1', 'yes')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'noreply@ediary.local').strip()
+
+# Cache (used for rate limiting)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'ediary-ratelimit',
+    }
+}
+
+# Basic error logging (file). Optional Sentry if SENTRY_DSN is set.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': str(BASE_DIR / 'ediary_errors.log'),
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['console', 'file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
+
+_sentry_dsn = os.getenv('SENTRY_DSN', '').strip()
+if _sentry_dsn:
+    try:
+        import sentry_sdk
+        from sentry_sdk.integrations.django import DjangoIntegration
+        sentry_sdk.init(dsn=_sentry_dsn, integrations=[DjangoIntegration()], traces_sample_rate=0.0)
+    except Exception:
+        pass

@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Email verification — eDiary</title>
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/nf-theme.css' %}" />
+</head>
+<body class="nf-auth">
+  <div class="nf-auth-shell">
+    <nav class="nf-auth-nav"><a href="{% url 'index' %}" class="nf-brand">eDiary</a></nav>
+    <div class="nf-auth-panel text-center">
+      {% if ok %}
+      <div class="nf-icon-badge green mx-auto mb-3"><i class="bx bx-check-shield"></i></div>
+      <h1 style="font-size:1.4rem !important;">Email verified</h1>
+      <a class="btn btn-primary mt-3" href="{% url 'user_login' %}">Continue to Sign In</a>
+      {% else %}
+      <div class="nf-icon-badge mx-auto mb-3"><i class="bx bx-error"></i></div>
+      <h1 style="font-size:1.4rem !important;">Link invalid</h1>
+      <p class="nf-auth-meta">This verification link is invalid or expired.</p>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

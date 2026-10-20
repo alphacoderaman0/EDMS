@@ -25,7 +25,7 @@
                                 <div class="card-title mb-0"><h4 class="mb-0">Search Notes</h4></div>
                             </div>
                             <hr>
-                            <form method="post">
+                            <form method="post" class="nf-loading-form" novalidate>
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <label class="form-label">Search By Notes title</label>
@@ -38,8 +38,13 @@
                             </form>
                         </div>
 
-                        {% if notes %}
                         <div class="card-body pt-0">
+                            {% if searched and not notes %}
+                            <div class="nf-empty-box">
+                                <span class="nf-icon-badge purple"><i class="bx bx-search-alt"></i></span>
+                                <div>No notes matched “{{ sd }}”.</div>
+                            </div>
+                            {% elif notes %}
                             <div class="table-responsive">
                                 <table class="table mb-0">
                                     <thead>
@@ -64,8 +69,13 @@
                                     </tbody>
                                 </table>
                             </div>
+                            {% elif not searched %}
+                            <div class="nf-empty-box">
+                                <span class="nf-icon-badge cyan"><i class="bx bx-book-content"></i></span>
+                                <div>Search your notes by title using the form above or the top bar.</div>
+                            </div>
+                            {% endif %}
                         </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
