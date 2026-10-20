@@ -146,7 +146,10 @@ else:
     )
 
 EMAIL_HOST = os.getenv('EMAIL_HOST', '')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587') or 587)
+try:
+    EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587') or 587)
+except ValueError:
+    EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '').strip()
 # Gmail App Passwords are often copied with spaces — strip them
 EMAIL_HOST_PASSWORD = (os.getenv('EMAIL_HOST_PASSWORD', '') or '').replace(' ', '').strip()
@@ -161,20 +164,31 @@ CACHES = {
     }
 }
 
-# Basic error logging (file). Optional Sentry if SENTRY_DSN is set.
+# Logging — never write files on Vercel (read-only FS → FUNCTION_INVOCATION_FAILED)
+_IS_VERCEL = bool(os.getenv('VERCEL') or os.getenv('VERCEL_ENV'))
+_log_handlers = ['console']
+_handlers = {
+    'console': {'class': 'logging.StreamHandler'},
+}
+if not _IS_VERCEL:
+    _log_path = BASE_DIR / 'ediary_errors.log'
+    try:
+        _log_path.touch(exist_ok=True)
+        _handlers['file'] = {
+            'class': 'logging.FileHandler',
+            'filename': str(_log_path),
+        }
+        _log_handlers.append('file')
+    except OSError:
+        pass
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'handlers': {
-        'console': {'class': 'logging.StreamHandler'},
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': str(BASE_DIR / 'ediary_errors.log'),
-        },
-    },
+    'handlers': _handlers,
     'loggers': {
         'django.request': {
-            'handlers': ['console', 'file'],
+            'handlers': _log_handlers,
             'level': 'ERROR',
             'propagate': True,
         },
